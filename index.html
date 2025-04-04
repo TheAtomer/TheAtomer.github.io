@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夏窗咏志</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f4f8;
+            position: relative;
+            overflow: hidden;
+            font-family: '楷体', 'KaiTi', serif;
+            cursor: pointer;
+        }
+
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 30px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            color: #444;
+            z-index: 2;
+        }
+
+        .poem-container {
+            opacity: 0;
+            animation: 
+                fadeIn 1s ease-out forwards,
+                floatUp 0.8s ease-out 0.3s forwards;
+            max-width: 680px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poem-title {
+            font-size: 2.2rem;
+            color: #2a4d69;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .poem-content {
+            font-size: 1.4rem;
+            color: #4b6584;
+            line-height: 2.2;
+            letter-spacing: 1.5px;
+            background: rgba(255,255,255,0.95);
+            padding: 2.5rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+        }
+
+        .poem-line {
+            display: block;
+            margin: 0.8rem 0;
+            position: relative;
+        }
+
+        /* 藏头字动画样式 */
+        .acrostic-char {
+            position: absolute;
+            left: -0.5em;
+            color: #e74c3c !important;
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+        }
+
+        .acrostic-container {
+            position: fixed;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 1.5rem;
+            font-size: 2rem;
+            color: #e74c3c;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+
+        .acrostic-container span {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: charAppear 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(30px); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes charAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(200, 200, 200, 0.08) 0px,
+                rgba(200, 200, 200, 0.08) 2px,
+                transparent 2px,
+                transparent 8px
+            );
+            animation: fadeIn 1.2s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown">
+        <div style="font-size:0.9rem; color:#2c3e50; margin-bottom:5px;">高考倒计时</div>
+        <div id="countdown-time" style="font-family: monospace; color:#e74c3c;"></div>
+    </div>
+
+    <div class="poem-container">
+        <div class="poem-content animate__animated">
+            <h1 class="poem-title">《夏窗咏志》</h1>
+            <span class="poem-line">
+                <span class="acrostic-char">高</span>
+                高梧栖蝉鸣暑天，三载寒窗志未迁
+            </span>
+            <span class="poem-line">
+                <span class="acrostic-char">三</span>
+                二更灯火映星斗，班门淬剑待锋显
+            </span>
+            <span class="poem-line">
+                <span class="acrostic-char">二</span>
+                高歌且破千重卷，考笔如犁耕砚田
+            </span>
+            <span class="poem-line">
+                <span class="acrostic-char">班</span>
+                加鞭何惧书山远，油然墨香化云烟
+            </span>
+        </div>
+    </div>
+
+    <div class="acrostic-container">
+        <span>高</span>
+        <span>三</span>
+        <span>二</span>
+        <span>班</span>
+        <span>高</span>
+        <span>考</span>
+        <span>加</span>
+        <span>油</span>
+    </div>
+
+    <script>
+        // 倒计时功能
+        function updateCountdown() {
+            const endDate = new Date('2025-06-07T09:00:00+08:00');
+            const now = new Date();
+            const diff = endDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const countdownElement = document.getElementById('countdown-time');
+            
+            if(diff <= 0) {
+                countdownElement.innerHTML = '<span style="color:#95a5a6">已开考</span>';
+                return;
+            }
+
+            const format = num => String(num).padStart(2, '0');
+            countdownElement.innerHTML = `
+                <span style="font-size:1.3em">${days}</span>天 
+                ${format(hours)}:${format(minutes)}:${format(seconds)}
+            `;
+        }
+
+        // 点击动画功能
+        let isAnimating = false;
+        
+        function startAnimation() {
+            if(isAnimating) return;
+            isAnimating = true;
+
+            const acrosticChars = document.querySelectorAll('.acrostic-char');
+            const finalContainer = document.querySelector('.acrostic-container');
+            const finalChars = finalContainer.querySelectorAll('span');
+
+            // 记录初始位置
+            acrosticChars.forEach((char, index) => {
+                const rect = char.getBoundingClientRect();
+                char.style.left = `${rect.left}px`;
+                char.style.top = `${rect.top}px`;
+                char.style.opacity = '1';
+            });
+
+            finalContainer.style.display = 'flex';
+            
+            // 执行飞行动画
+            acrosticChars.forEach((char, index) => {
+                const target = finalChars[index];
+                const targetRect = target.getBoundingClientRect();
+                
+                setTimeout(() => {
+                    char.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    char.style.left = `${targetRect.left}px`;
+                    char.style.top = `${targetRect.top}px`;
+                    
+                    // 显示最终文字
+                    setTimeout(() => {
+                        target.style.animation = `charAppear 0.5s ${index*0.1}s forwards`;
+                        char.style.opacity = '0';
+                        if(index === acrosticChars.length-1) isAnimating = false;
+                    }, 1000);
+                }, index * 100);
+            });
+        }
+
+        // 事件监听
+        document.body.addEventListener('click', startAnimation);
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
