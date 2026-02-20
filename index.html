@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear Style Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-avatar">
+          <img src="https://avatars.githubusercontent.com/u/56762657?s=400&u=34e67a985456b343ea962f961b6e3c7b983d3065&v=4" alt="Avatar">
+        </div>
+        <nav class="nav">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="https://theatomer.github.io/blog" target="_blank" class="nav-link">Blog</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-wrapper">
+          <div class="hero-avatar">
+            <img src="https://avatars.githubusercontent.com/u/56762657?s=400&u=34e67a985456b343ea962f961b6e3c7b983d3065&v=4" alt="Avatar">
+          </div>
+          <div class="hero-text">
+            <p class="hero-greeting">hello, world</p>
+            <h1 class="hero-title">
+              <span class="hero-title-prefix">I'm a</span>
+              <span class="hero-title-text" id="typing-text"></span>
+              <span class="typing-cursor">|</span>
+            </h1>
+            <p class="hero-subtitle">Building beautiful, fast, and accessible web experiences with modern technologies. Focused on clean code and great user experience.</p>
+            <div style="margin-top: 32px;">
+              <p class="hero-link-line">
+                <i class="fa fa-github link-icon" style="color: var(--text-muted);"></i>
+                <span class="link-prefix">$</span>
+                <a href="https://github.com" target="_blank" class="hero-link">cat ~/github</a>
+              </p>
+              <p class="hero-link-line">
+                <i class="fa fa-link link-icon" style="color: var(--text-muted);"></i>
+                <span class="link-prefix">$</span>
+                <a href="https://example.com" target="_blank" class="hero-link">curl https://portfolio.example.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="section-title-combined" id="sub-about"></span>
+      </h2>
+      <div class="about-grid">
+        <div class="card">
+          <p class="about-text">
+            I'm a passionate developer with 5+ years of experience building web applications. 
+            I enjoy working with modern frameworks and tools, and I'm always eager to learn new technologies.
+          </p>
+        </div>
+        <div class="card">
+          <p class="about-text">
+            When I'm not coding, you can find me exploring open source projects, 
+            reading tech blogs, or contributing to the developer community.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="section-title-combined" id="sub-skills"></span>
+      </h2>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-code"></i>
+          </div>
+          <span class="skill-name">JavaScript</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-code"></i>
+          </div>
+          <span class="skill-name">TypeScript</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-cube"></i>
+          </div>
+          <span class="skill-name">React</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-rocket"></i>
+          </div>
+          <span class="skill-name">Next.js</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-server"></i>
+          </div>
+          <span class="skill-name">Node.js</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-terminal"></i>
+          </div>
+          <span class="skill-name">Python</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-database"></i>
+          </div>
+          <span class="skill-name">PostgreSQL</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-database"></i>
+          </div>
+          <span class="skill-name">MongoDB</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-cubes"></i>
+          </div>
+          <span class="skill-name">Docker</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-git"></i>
+          </div>
+          <span class="skill-name">Git</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-cloud"></i>
+          </div>
+          <span class="skill-name">AWS</span>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">
+            <i class="fa fa-paint-brush"></i>
+          </div>
+          <span class="skill-name">Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="section-title-combined" id="sub-projects"></span>
+      </h2>
+      <div class="projects-grid">
+        <a href="https://github.com" target="_blank" class="project-card">
+          <div class="project-header">
+            <div class="project-icon">
+              <i class="fa fa-github"></i>
+            </div>
+            <div class="project-meta">
+              <h3 class="project-title">Analytics Dashboard</h3>
+              <span class="project-language">JavaScript • React</span>
+            </div>
+          </div>
+          <p class="project-desc">A real-time analytics dashboard with interactive charts and data visualization.</p>
+          <div class="project-footer">
+            <div class="project-stats">
+              <span><i class="fa fa-star"></i> 128</span>
+              <span><i class="fa fa-code-fork"></i> 24</span>
+            </div>
+            <span class="view-repo">View repo →</span>
+          </div>
+        </a>
+        <a href="https://github.com" target="_blank" class="project-card">
+          <div class="project-header">
+            <div class="project-icon">
+              <i class="fa fa-github"></i>
+            </div>
+            <div class="project-meta">
+              <h3 class="project-title">E-commerce Platform</h3>
+              <span class="project-language">TypeScript • Next.js</span>
+            </div>
+          </div>
+          <p class="project-desc">Full-featured online store with payment integration and inventory management.</p>
+          <div class="project-footer">
+            <div class="project-stats">
+              <span><i class="fa fa-star"></i> 256</span>
+              <span><i class="fa fa-code-fork"></i> 42</span>
+            </div>
+            <span class="view-repo">View repo →</span>
+          </div>
+        </a>
+        <a href="https://github.com" target="_blank" class="project-card">
+          <div class="project-header">
+            <div class="project-icon">
+              <i class="fa fa-github"></i>
+            </div>
+            <div class="project-meta">
+              <h3 class="project-title">Task Manager</h3>
+              <span class="project-language">Python • Django</span>
+            </div>
+          </div>
+          <p class="project-desc">Collaborative task management tool with real-time updates and team features.</p>
+          <div class="project-footer">
+            <div class="project-stats">
+              <span><i class="fa fa-star"></i> 89</span>
+              <span><i class="fa fa-code-fork"></i> 15</span>
+            </div>
+            <span class="view-repo">View repo →</span>
+          </div>
+        </a>
+        <a href="https://github.com" target="_blank" class="project-card">
+          <div class="project-header">
+            <div class="project-icon">
+              <i class="fa fa-github"></i>
+            </div>
+            <div class="project-meta">
+              <h3 class="project-title">REST API Service</h3>
+              <span class="project-language">Go • PostgreSQL</span>
+            </div>
+          </div>
+          <p class="project-desc">Scalable backend API with authentication, rate limiting, and documentation.</p>
+          <div class="project-footer">
+            <div class="project-stats">
+              <span><i class="fa fa-star"></i> 173</span>
+              <span><i class="fa fa-code-fork"></i> 31</span>
+            </div>
+            <span class="view-repo">View repo →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Portfolio. Built with care.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
