@@ -372,16 +372,16 @@ section {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 
 .skill-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 24px 16px;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px 24px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
@@ -393,23 +393,38 @@ section {
 .skill-item::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
+.skill-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.04) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
 .skill-item:hover {
+  background: rgba(255, 255, 255, 0.03);
   border-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .skill-item:hover::before {
   opacity: 1;
 }
 
-.skill-item:hover::before {
+.skill-item:hover::after {
   opacity: 1;
 }
 
@@ -419,17 +434,18 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
-  border-radius: 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
   font-size: 20px;
-  color: var(--accent-purple);
+  color: var(--text-secondary);
 }
 
 .skill-name {
-  font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 18px;
   color: var(--text-primary);
-  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.3px;
 }
 
 .projects-grid {
@@ -798,4 +814,33 @@ section {
 
 .post-meta-header .divider {
   color: var(--border-subtle);
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(94, 106, 210, 0.9);
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(94, 106, 210, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.back-to-top:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(94, 106, 210, 0.5);
+}
+
+.back-to-top.visible {
+  display: flex;
 }

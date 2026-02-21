@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const typingText = document.getElementById('typing-text');
   if (typingText) {
     const roles = [
-      ' Full Stack Developer.',
       ' Creative Designer.',
       ' Problem Solver.',
-      ' Tech Enthusiast.'
+      ' Tech Enthusiast.',
+      ' Artificial Intelligence Lover.'
     ];
     let roleIndex = 0;
     let charIndex = 0;
