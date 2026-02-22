@@ -25,7 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
 
-  document.querySelectorAll('.card, .project-card').forEach(el => {
+  const selectors = [
+    '.projects-grid .project-card',
+    '.about-grid .card',
+    '#posts-container .card'
+  ];
+  
+  document.querySelectorAll(selectors.join(', ')).forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -103,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!el) return;
 
     let charIndex = 0;
-    const typingSpeed = 80;
+    const typingSpeed = 40;
 
     function type() {
       if (charIndex < text.length) {
@@ -144,4 +150,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   addCardGlowEffect();
+
+  function typeBlogTitle() {
+    const heroTitleText = document.querySelector('.hero-title-text');
+    if (!heroTitleText) return;
+
+    const fullText = heroTitleText.textContent.trim();
+    heroTitleText.textContent = '';
+    let charIndex = 0;
+    const typingSpeed = 40;
+
+    function type() {
+      if (charIndex < fullText.length) {
+        heroTitleText.textContent = fullText.substring(0, charIndex + 1);
+        charIndex++;
+        setTimeout(type, typingSpeed);
+      }
+    }
+
+    setTimeout(type, 300);
+  }
+
+  typeBlogTitle();
 });
