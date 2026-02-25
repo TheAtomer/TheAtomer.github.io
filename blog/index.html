@@ -24,11 +24,14 @@
           <a href="../index.html#projects" class="nav-link">Projects</a>
           <a href="index.html" class="nav-link">Blog</a>
         </nav>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span class="menu-icon"></span>
+        </button>
       </div>
     </div>
   </header>
 
-  <section class="hero" style="min-height: auto; padding-top: 120px; padding-bottom: 60px;">
+  <section class="hero blog-hero">
     <div class="container">
       <div class="hero-content">
         <p class="hero-greeting">welcome to my blog</p>
@@ -40,38 +43,38 @@
     </div>
   </section>
 
-  <section style="padding: 0 0 120px 0;">
+  <section class="blog-section">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 280px 1fr; gap: 32px;">
-        <div style="position: sticky; top: 100px; align-self: start;">
+      <div class="blog-layout">
+        <aside class="blog-sidebar">
           <div class="card">
-            <div style="text-align: center; padding-bottom: 16px;">
-              <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border-subtle); margin: 0 auto 16px;">
-                <img src="../src/head.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="sidebar-profile">
+              <div class="sidebar-avatar">
+                <img src="../src/head.png" alt="Avatar">
               </div>
-              <div style="font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); font-size: 16px;">TheAtomer</div>
+              <div class="sidebar-name">TheAtomer</div>
             </div>
             
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
-              <div class="hero-link-line" style="font-family: var(--font-mono);">
+            <div class="sidebar-section">
+              <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls categories</span>
               </div>
-              <div style="margin-top: 12px; padding-left: 20px;">
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">post</a>
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">C++</a>
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">PyTorch</a>
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">Machine Learning</a>
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">Kaggle</a>
+              <div class="sidebar-links">
+                <a href="#" class="sidebar-link">post</a>
+                <a href="#" class="sidebar-link">C++</a>
+                <a href="#" class="sidebar-link">PyTorch</a>
+                <a href="#" class="sidebar-link">Machine Learning</a>
+                <a href="#" class="sidebar-link">Kaggle</a>
               </div>
             </div>
             
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
-              <div class="hero-link-line" style="font-family: var(--font-mono);">
+            <div class="sidebar-section">
+              <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls tags</span>
               </div>
-              <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;" id="tag-container">
+              <div class="sidebar-tags" id="tag-container">
                 <span class="tag-pill" data-tag="C++">C++</span>
                 <span class="tag-pill" data-tag="Practical">Practical</span>
                 <span class="tag-pill" data-tag="Tips">Tips</span>
@@ -82,37 +85,37 @@
               </div>
             </div>
           </div>
-        </div>
+        </aside>
         
-        <div>
-          <div class="hero-link-line" style="margin-bottom: 32px; font-family: var(--font-mono);">
+        <main class="blog-main">
+          <div class="hero-link-line posts-header">
             <span class="link-prefix">$</span>
             <span class="hero-link">find . -name "*.md" -type f | sort -r</span>
           </div>
           
           <div id="posts-container">
-            <div class="card" style="margin-bottom: 24px; cursor: pointer;" onclick="location.href='2026/02/10/obesity-risk-prediction/index.html'" data-tags="PyTorch,Machine Learning,Kaggle">
-              <h2 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; font-family: var(--font-mono);">肥胖风险多分类预测项目</h2>
-              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-family: var(--font-mono);">2026-02-10 • PyTorch • PyTorch, Machine Learning, Kaggle</p>
-              <p class="about-text" style="margin-bottom: 12px;">一个完整的机器学习教学项目，用于预测个人的肥胖风险等级，包含数据探索、特征工程、模型训练等完整流程...</p>
-              <div style="color: var(--accent-purple); font-family: var(--font-mono); font-size: 14px;">read more →</div>
+            <div class="card post-card" onclick="location.href='2026/02/10/obesity-risk-prediction/index.html'" data-tags="PyTorch,Machine Learning,Kaggle">
+              <h2 class="post-title">肥胖风险多分类预测项目</h2>
+              <p class="post-meta">2026-02-10 • PyTorch • PyTorch, Machine Learning, Kaggle</p>
+              <p class="about-text post-excerpt">一个完整的机器学习教学项目，用于预测个人的肥胖风险等级，包含数据探索、特征工程、模型训练等完整流程...</p>
+              <div class="read-more">read more →</div>
             </div>
             
-            <div class="card" style="margin-bottom: 24px; cursor: pointer;" onclick="location.href='2025/10/25/C++ vector进行去重/index.html'" data-tags="C++,Tips">
-              <h2 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; font-family: var(--font-mono);">C++ vector进行去重</h2>
-              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-family: var(--font-mono);">2025-10-25 • C++ • C++, Tips</p>
-              <p class="about-text" style="margin-bottom: 12px;">去重用到vector的unique()函数，代码示例和详细说明...</p>
-              <div style="color: var(--accent-purple); font-family: var(--font-mono); font-size: 14px;">read more →</div>
+            <div class="card post-card" onclick="location.href='2025/10/25/C++ vector进行去重/index.html'" data-tags="C++,Tips">
+              <h2 class="post-title">C++ vector进行去重</h2>
+              <p class="post-meta">2025-10-25 • C++ • C++, Tips</p>
+              <p class="about-text post-excerpt">去重用到vector的unique()函数，代码示例和详细说明...</p>
+              <div class="read-more">read more →</div>
             </div>
             
-            <div class="card" style="cursor: pointer;" onclick="location.href='2025/09/19/markdown_basics/index.html'" data-tags="Practical">
-              <h2 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; font-family: var(--font-mono);">Markdown Basic Syntax</h2>
-              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-family: var(--font-mono);">2025-09-19 • post • Practical</p>
-              <p class="about-text" style="margin-bottom: 12px;">Markdown 是一种轻量级的标记语言，设计用于让普通文本具有丰富的格式表现...</p>
-              <div style="color: var(--accent-purple); font-family: var(--font-mono); font-size: 14px;">read more →</div>
+            <div class="card post-card" onclick="location.href='2025/09/19/markdown_basics/index.html'" data-tags="Practical">
+              <h2 class="post-title">Markdown Basic Syntax</h2>
+              <p class="post-meta">2025-09-19 • post • Practical</p>
+              <p class="about-text post-excerpt">Markdown 是一种轻量级的标记语言，设计用于让普通文本具有丰富的格式表现...</p>
+              <div class="read-more">read more →</div>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   </section>

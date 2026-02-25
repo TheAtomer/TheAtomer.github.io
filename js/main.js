@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
   const header = document.querySelector('.header');
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
   let lastScroll = 0;
+
+  if (menuToggle && nav) {
+    menuToggle.addEventListener('click', function() {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  }
 
   window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;

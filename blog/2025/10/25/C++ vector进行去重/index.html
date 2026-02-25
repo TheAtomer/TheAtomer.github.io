@@ -24,11 +24,14 @@
           <a href="../../../../../index.html#projects" class="nav-link">Projects</a>
           <a href="../../../../index.html" class="nav-link">Blog</a>
         </nav>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span class="menu-icon"></span>
+        </button>
       </div>
     </div>
   </header>
 
-  <section class="hero" style="min-height: auto; padding-top: 120px; padding-bottom: 40px;">
+  <section class="hero post-hero">
     <div class="container">
       <div class="hero-content">
         <p class="hero-greeting">~/blog/posts</p>
@@ -40,42 +43,42 @@
     </div>
   </section>
 
-  <section style="padding: 0 0 120px 0;">
+  <section class="post-section">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 280px 1fr; gap: 32px;">
-        <div style="position: sticky; top: 100px; align-self: start;">
+      <div class="post-layout">
+        <aside class="post-sidebar">
           <div class="card">
-            <div style="margin-top: 0; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
-              <div class="hero-link-line" style="font-family: var(--font-mono);">
+            <div class="sidebar-nav-section">
+              <div class="hero-link-line">
                 <span class="link-prefix">$</span>
-                <a href="../../../../index.html" style="color: var(--accent-purple); text-decoration: none;" class="hero-link">cd ../</a>
+                <a href="../../../../index.html" class="hero-link" style="color: var(--accent-purple); text-decoration: none;">cd ../</a>
               </div>
             </div>
             
-            <div style="text-align: center; padding-bottom: 16px; padding-top: 16px;">
-              <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border-subtle); margin: 0 auto 16px;">
-                <img src="../../../../../src/head.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="sidebar-profile">
+              <div class="sidebar-avatar">
+                <img src="../../../../../src/head.png" alt="Avatar">
               </div>
-              <div style="font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); font-size: 16px;">TheAtomer</div>
+              <div class="sidebar-name">TheAtomer</div>
             </div>
             
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
-              <div class="hero-link-line" style="font-family: var(--font-mono);">
+            <div class="sidebar-section">
+              <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls categories</span>
               </div>
-              <div style="margin-top: 12px; padding-left: 20px;">
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">post</a>
-                <a href="#" style="display: block; margin: 8px 0; font-size: 13px; color: var(--text-secondary); text-decoration: none; font-family: var(--font-mono);">C++</a>
+              <div class="sidebar-links">
+                <a href="#" class="sidebar-link">post</a>
+                <a href="#" class="sidebar-link">C++</a>
               </div>
             </div>
             
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
-              <div class="hero-link-line" style="font-family: var(--font-mono);">
+            <div class="sidebar-section">
+              <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls tags</span>
               </div>
-              <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+              <div class="sidebar-tags">
                 <span class="tag-pill">C++</span>
                 <span class="tag-pill">Practical</span>
                 <span class="tag-pill">Tips</span>
@@ -83,24 +86,22 @@
               </div>
             </div>
           </div>
-        </div>
+        </aside>
         
-        <div class="card">
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; font-family: var(--font-mono);">2025-10-25 • C++ • C++, Tips</p>
+        <main class="card post-content-card">
+          <p class="post-meta-header">2025-10-25 • C++ • C++, Tips</p>
           
-          <div style="color: var(--text-primary); line-height: 1.8;">
-            <h1 style="font-size: 28px; margin: 0 0 24px; color: var(--text-primary); font-family: var(--font-mono);">C++ vector进行去重</h1>
+          <div class="post-body">
+            <h1>C++ vector进行去重</h1>
             
             <p>去重用到vector的unique()函数，代码如下：</p>
             
-            <pre style="background: var(--bg-secondary); padding: 20px; border-radius: 8px; overflow-x: auto; font-family: var(--font-mono); font-size: 14px; margin: 16px 0;"><code>vector&lt;auto&gt; MyVector;
+            <pre><code>vector&lt;auto&gt; MyVector;
 
 auto it = std::unique(MyVector.begin(), MyVector.end());
-high.erase(it, high.end());</code></pre>
+MyVector.erase(it, MyVector.end());</code></pre>
           </div>
-          
-          
-        </div>
+        </main>
       </div>
     </div>
   </section>
