@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-
   document.querySelectorAll('a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
@@ -79,6 +78,67 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  class Typewriter {
+    constructor(element, options = {}) {
+      this.element = element;
+      this.texts = Array.isArray(options.texts) ? options.texts : (options.text ? [options.text] : []);
+      this.currentTextIndex = 0;
+      this.typingSpeed = options.typingSpeed || 100;
+      this.deletingSpeed = options.deletingSpeed || 50;
+      this.deleteDelay = options.deleteDelay || 1500;
+      this.typeDelay = options.typeDelay || 500;
+      this.loop = options.loop || false;
+      this.onStart = options.onStart || (() => {});
+      this.onComplete = options.onComplete || (() => {});
+      
+      this.charIndex = 0;
+      this.isDeleting = false;
+      this.isTyping = false;
+    }
+
+    start() {
+      if (this.isTyping || this.texts.length === 0) return;
+      this.isTyping = true;
+      this.onStart();
+      this.type();
+    }
+
+    stop() {
+      this.isTyping = false;
+    }
+
+    type() {
+      if (!this.isTyping || !this.element) return;
+
+      const currentText = this.texts[this.currentTextIndex];
+      const displayText = this.isDeleting 
+        ? currentText.substring(0, this.charIndex - 1)
+        : currentText.substring(0, this.charIndex + 1);
+      
+      this.element.textContent = displayText;
+      this.charIndex = this.isDeleting ? this.charIndex - 1 : this.charIndex + 1;
+
+      let speed = this.isDeleting ? this.deletingSpeed : this.typingSpeed;
+
+      if (!this.isDeleting && this.charIndex === currentText.length) {
+        if (this.loop) {
+          speed = this.deleteDelay;
+          this.isDeleting = true;
+        } else {
+          this.isTyping = false;
+          this.onComplete();
+          return;
+        }
+      } else if (this.isDeleting && this.charIndex === 0) {
+        this.isDeleting = false;
+        this.currentTextIndex = (this.currentTextIndex + 1) % this.texts.length;
+        speed = this.typeDelay;
+      }
+
+      setTimeout(() => this.type(), speed);
+    }
+  }
+
   const typingText = document.getElementById('typing-text');
   if (typingText) {
     const roles = [
@@ -87,58 +147,31 @@ document.addEventListener('DOMContentLoaded', function() {
       ' Tech Enthusiast.',
       ' Artificial Intelligence Lover.'
     ];
-    let roleIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-
-    function type() {
-      const currentRole = roles[roleIndex];
-      
-      if (isDeleting) {
-        typingText.textContent = currentRole.substring(0, charIndex - 1);
-        charIndex--;
-        typingSpeed = 50;
-      } else {
-        typingText.textContent = currentRole.substring(0, charIndex + 1);
-        charIndex++;
-        typingSpeed = 100;
-      }
-
-      if (!isDeleting && charIndex === currentRole.length) {
-        isDeleting = true;
-        typingSpeed = 1500;
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-        typingSpeed = 500;
-      }
-
-      setTimeout(type, typingSpeed);
-    }
-
-    type();
+    
+    const typewriter = new Typewriter(typingText, {
+      texts: roles,
+      typingSpeed: 100,
+      deletingSpeed: 50,
+      deleteDelay: 1500,
+      typeDelay: 500,
+      loop: true
+    });
+    typewriter.start();
   }
 
   function typeSubtitle(elementId, text) {
     const el = document.getElementById(elementId);
     if (!el) return;
 
-    let charIndex = 0;
-    const typingSpeed = 40;
-
-    function type() {
-      if (charIndex < text.length) {
-        el.textContent = text.substring(0, charIndex + 1);
-        charIndex++;
-        setTimeout(type, typingSpeed);
-      }
-    }
-
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          type();
+          const typewriter = new Typewriter(el, {
+            text: text,
+            typingSpeed: 40,
+            loop: false
+          });
+          typewriter.start();
           sectionObserver.unobserve(entry.target);
         }
       });
@@ -173,18 +206,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const fullText = heroTitleText.textContent.trim();
     heroTitleText.textContent = '';
-    let charIndex = 0;
-    const typingSpeed = 40;
 
-    function type() {
-      if (charIndex < fullText.length) {
-        heroTitleText.textContent = fullText.substring(0, charIndex + 1);
-        charIndex++;
-        setTimeout(type, typingSpeed);
-      }
-    }
-
-    setTimeout(type, 300);
+    setTimeout(() => {
+      const typewriter = new Typewriter(heroTitleText, {
+        text: fullText,
+        typingSpeed: 40,
+        loop: false
+      });
+      typewriter.start();
+    }, 300);
   }
 
   typeBlogTitle();
