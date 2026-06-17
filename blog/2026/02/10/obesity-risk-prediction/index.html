@@ -6,11 +6,14 @@
   <title>肥胖风险多分类预测项目 | AtomerCore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="../../../../../css/styles.css">
 </head>
 <body>
+  <div class="bg-grid"></div>
+  <div class="reading-progress" id="readingProgress"></div>
+
   <header class="header">
     <div class="container">
       <div class="header-inner">
@@ -54,26 +57,26 @@
                 <a href="../../../../index.html" class="hero-link">cd ../</a>
               </div>
             </div>
-            
+
             <div class="sidebar-profile">
               <div class="sidebar-avatar">
                 <img src="../../../../../src/head.png" alt="Avatar">
               </div>
               <div class="sidebar-name">AtomerCore</div>
             </div>
-            
+
             <div class="sidebar-section">
               <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls categories</span>
               </div>
               <div class="sidebar-links">
-                <a href="#" class="sidebar-link">PyTorch</a>
-                <a href="#" class="sidebar-link">Machine Learning</a>
-                <a href="#" class="sidebar-link">Kaggle</a>
+                <a href="../../../../index.html" class="sidebar-link">PyTorch</a>
+                <a href="../../../../index.html" class="sidebar-link">Machine Learning</a>
+                <a href="../../../../index.html" class="sidebar-link">Kaggle</a>
               </div>
             </div>
-            
+
             <div class="sidebar-section">
               <div class="hero-link-line">
                 <span class="link-prefix">$</span>
@@ -85,12 +88,26 @@
                 <span class="tag-pill">Kaggle</span>
               </div>
             </div>
+
+            <div class="toc-section" id="toc-section" style="display: none;">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">cat TOC</span>
+              </div>
+              <ul class="toc-list" id="toc-list"></ul>
+            </div>
           </div>
         </aside>
-        
+
         <main class="card post-content-card">
-          <p class="post-meta-header">2026-02-10 • PyTorch • PyTorch, Machine Learning, Kaggle</p>
-          
+          <p class="post-meta-header">
+            <span>2026-02-10</span>
+            <span class="meta-divider">•</span>
+            <span>PyTorch</span>
+            <span class="meta-divider">•</span>
+            <span class="meta-reading-time">~15 min read</span>
+          </p>
+
           <div class="post-body">
             <h1>肥胖风险多分类预测项目</h1>
             
@@ -683,15 +700,24 @@ plt.show()</code></pre>
             <p>MIT License</p>
             
           </div>
-          
-          
-        </div>
+
+          <nav class="post-nav">
+            <a class="post-nav-item" href="../../../10/25/C++ vector进行去重/index.html">
+              <span class="post-nav-label">← older</span>
+              <span class="post-nav-title">C++ vector进行去重</span>
+            </a>
+            <a class="post-nav-item next" href="../../../03/10/lower-bound-upper-bound/index.html">
+              <span class="post-nav-label">newer →</span>
+              <span class="post-nav-title">C++ STL中lower_bound()和upper_bound()函数</span>
+            </a>
+          </nav>
+        </main>
       </div>
     </div>
   </section>
 
-  <button class="back-to-top" id="backToTopBtn">
-    <i class="fa fa-arrow-up"></i>
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
   </button>
 
   <footer class="footer">
@@ -702,21 +728,52 @@ plt.show()</code></pre>
 
   <script src="../../../../../js/main.js"></script>
   <script>
-    const backToTopBtn = document.getElementById('backToTopBtn');
-    
+    // Reading progress bar
+    const progressBar = document.getElementById('readingProgress');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
-      }
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (window.scrollY / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
     });
-    
+
+    // Auto-generate TOC
+    const postBody = document.querySelector('.post-body');
+    const tocSection = document.getElementById('toc-section');
+    const tocList = document.getElementById('toc-list');
+    if (postBody && tocList) {
+      const headings = postBody.querySelectorAll('h2, h3');
+      if (headings.length > 0) {
+        tocSection.style.display = 'block';
+        headings.forEach((heading, index) => {
+          if (!heading.id) heading.id = 'toc-heading-' + index;
+          const item = document.createElement('li');
+          item.className = 'toc-item';
+          const link = document.createElement('a');
+          link.href = '#' + heading.id;
+          link.textContent = heading.textContent;
+          link.className = 'toc-link' + (heading.tagName === 'H3' ? ' toc-h3' : '');
+          link.dataset.target = heading.id;
+          item.appendChild(link);
+          tocList.appendChild(item);
+        });
+        const tocLinks = tocList.querySelectorAll('.toc-link');
+        window.addEventListener('scroll', () => {
+          let current = '';
+          headings.forEach(h => {
+            if (window.scrollY >= h.offsetTop - 120) current = h.id;
+          });
+          tocLinks.forEach(l => l.classList.toggle('active', l.dataset.target === current));
+        });
+      }
+    }
+
+    // Back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+    });
     backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>

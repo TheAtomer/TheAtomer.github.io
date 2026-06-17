@@ -6,11 +6,13 @@
   <title>Blog | AtomerCore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+  <div class="bg-grid"></div>
+
   <header class="header">
     <div class="container">
       <div class="header-inner">
@@ -61,11 +63,12 @@
                 <span class="hero-link">ls categories</span>
               </div>
               <div class="sidebar-links">
-                <a href="#" class="sidebar-link">post</a>
-                <a href="#" class="sidebar-link">C++</a>
-                <a href="#" class="sidebar-link">PyTorch</a>
-                <a href="#" class="sidebar-link">Machine Learning</a>
-                <a href="#" class="sidebar-link">Kaggle</a>
+                <a class="sidebar-link" data-category="all">all</a>
+                <a class="sidebar-link" data-category="post">post</a>
+                <a class="sidebar-link" data-category="C++">C++</a>
+                <a class="sidebar-link" data-category="PyTorch">PyTorch</a>
+                <a class="sidebar-link" data-category="Machine Learning">Machine Learning</a>
+                <a class="sidebar-link" data-category="Kaggle">Kaggle</a>
               </div>
             </div>
             
@@ -82,38 +85,111 @@
                 <span class="tag-pill" data-tag="PyTorch">PyTorch</span>
                 <span class="tag-pill" data-tag="Machine Learning">Machine Learning</span>
                 <span class="tag-pill" data-tag="Kaggle">Kaggle</span>
+                <span class="tag-pill" data-tag="STL">STL</span>
+                <span class="tag-pill" data-tag="Algorithm">Algorithm</span>
               </div>
             </div>
           </div>
         </aside>
         
         <main class="blog-main">
-          <div class="hero-link-line posts-header">
-            <span class="link-prefix">$</span>
-            <span class="hero-link">find . -name "*.md" -type f | sort -r</span>
+          <div class="blog-search">
+            <span class="blog-search-prefix">$ grep -ri</span>
+            <input type="text" class="blog-search-input" id="search-input" placeholder='"keyword" ./posts'>
+          </div>
+
+          <div class="posts-header">
+            <div class="hero-link-line">
+              <span class="link-prefix">$</span>
+              <span class="hero-link">find . -name "*.md" -type f | sort -r</span>
+            </div>
+            <div class="posts-count"><span id="post-count">6</span> posts found</div>
           </div>
           
           <div id="posts-container">
-            <div class="card post-card" onclick="location.href='2026/02/10/obesity-risk-prediction/index.html'" data-tags="PyTorch,Machine Learning,Kaggle">
+            <a class="card post-card" href="2026/03/18/max-subinterval-analysis/index.html" data-tags="C++,Algorithm" data-category="C++" data-title="题目分析：寻找满足题意的最大子区间">
+              <h2 class="post-title">题目分析：寻找满足题意的最大子区间</h2>
+              <p class="post-meta">2026-03-18 • C++</p>
+              <p class="post-excerpt">牛客空调遥控题目分析，使用双指针和二分法寻找满足条件的最大子区间，从暴力枚举优化到 O(n log n) 解法...</p>
+              <div class="post-card-footer">
+                <div class="post-card-tags">
+                  <span class="tag-pill">C++</span>
+                  <span class="tag-pill">Algorithm</span>
+                </div>
+                <span class="read-more">read more →</span>
+              </div>
+            </a>
+
+            <a class="card post-card" href="2026/03/12/greater-less-comparator/index.html" data-tags="C++,STL" data-category="C++" data-title="C++ STL中std::greater、std::less与自定义比较器">
+              <h2 class="post-title">C++ STL中std::greater、std::less与自定义比较器</h2>
+              <p class="post-meta">2026-03-12 • C++</p>
+              <p class="post-excerpt">C++ STL中std::greater与std::less的用法详解，包括排序、建堆的应用场景，以及自定义比较器的几种实现方式...</p>
+              <div class="post-card-footer">
+                <div class="post-card-tags">
+                  <span class="tag-pill">C++</span>
+                  <span class="tag-pill">STL</span>
+                </div>
+                <span class="read-more">read more →</span>
+              </div>
+            </a>
+
+            <a class="card post-card" href="2026/03/10/lower-bound-upper-bound/index.html" data-tags="C++,STL,Algorithm" data-category="C++" data-title="C++ STL中lower_bound()和upper_bound()函数">
+              <h2 class="post-title">C++ STL中lower_bound()和upper_bound()函数</h2>
+              <p class="post-meta">2026-03-10 • C++</p>
+              <p class="post-excerpt">C++ STL中lower_bound()和upper_bound()函数的用法、工作原理及典型应用场景，基于二分查找实现 O(log n) 查找...</p>
+              <div class="post-card-footer">
+                <div class="post-card-tags">
+                  <span class="tag-pill">C++</span>
+                  <span class="tag-pill">STL</span>
+                  <span class="tag-pill">Algorithm</span>
+                </div>
+                <span class="read-more">read more →</span>
+              </div>
+            </a>
+
+            <a class="card post-card" href="2026/02/10/obesity-risk-prediction/index.html" data-tags="PyTorch,Machine Learning,Kaggle" data-category="PyTorch" data-title="肥胖风险多分类预测项目">
               <h2 class="post-title">肥胖风险多分类预测项目</h2>
-              <p class="post-meta">2026-02-10 • PyTorch • PyTorch, Machine Learning, Kaggle</p>
-              <p class="about-text post-excerpt">一个完整的机器学习教学项目，用于预测个人的肥胖风险等级，包含数据探索、特征工程、模型训练等完整流程...</p>
-              <div class="read-more">read more →</div>
-            </div>
+              <p class="post-meta">2026-02-10 • PyTorch</p>
+              <p class="post-excerpt">一个完整的机器学习教学项目，用于预测个人的肥胖风险等级，包含数据探索、特征工程、模型训练等完整流程...</p>
+              <div class="post-card-footer">
+                <div class="post-card-tags">
+                  <span class="tag-pill">PyTorch</span>
+                  <span class="tag-pill">Machine Learning</span>
+                  <span class="tag-pill">Kaggle</span>
+                </div>
+                <span class="read-more">read more →</span>
+              </div>
+            </a>
             
-            <div class="card post-card" onclick="location.href='2025/10/25/C++ vector进行去重/index.html'" data-tags="C++,Tips">
+            <a class="card post-card" href="2025/10/25/C++ vector进行去重/index.html" data-tags="C++,Tips" data-category="C++" data-title="C++ vector进行去重">
               <h2 class="post-title">C++ vector进行去重</h2>
-              <p class="post-meta">2025-10-25 • C++ • C++, Tips</p>
-              <p class="about-text post-excerpt">去重用到vector的unique()函数，代码示例和详细说明...</p>
-              <div class="read-more">read more →</div>
-            </div>
+              <p class="post-meta">2025-10-25 • C++</p>
+              <p class="post-excerpt">去重用到vector的unique()函数，代码示例和详细说明...</p>
+              <div class="post-card-footer">
+                <div class="post-card-tags">
+                  <span class="tag-pill">C++</span>
+                  <span class="tag-pill">Tips</span>
+                </div>
+                <span class="read-more">read more →</span>
+              </div>
+            </a>
             
-            <div class="card post-card" onclick="location.href='2025/09/19/markdown_basics/index.html'" data-tags="Practical">
+            <a class="card post-card" href="2025/09/19/markdown_basics/index.html" data-tags="Practical" data-category="post" data-title="Markdown Basic Syntax">
               <h2 class="post-title">Markdown Basic Syntax</h2>
-              <p class="post-meta">2025-09-19 • post • Practical</p>
-              <p class="about-text post-excerpt">Markdown 是一种轻量级的标记语言，设计用于让普通文本具有丰富的格式表现...</p>
-              <div class="read-more">read more →</div>
-            </div>
+              <p class="post-meta">2025-09-19 • post</p>
+              <p class="post-excerpt">Markdown 是一种轻量级的标记语言，设计用于让普通文本具有丰富的格式表现...</p>
+              <div class="post-card-footer">
+                <div class="post-card-tags">
+                  <span class="tag-pill">Practical</span>
+                </div>
+                <span class="read-more">read more →</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-state-code">$ find: no matches found</div>
+            <div class="empty-state-text">Try a different keyword or clear the filters.</div>
           </div>
         </main>
       </div>
@@ -126,12 +202,35 @@
     </div>
   </footer>
 
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script src="../js/main.js"></script>
   <script>
     const selectedTags = new Set();
-    const tagPills = document.querySelectorAll('#tag-container .tag-pill');
-    const postCards = document.querySelectorAll('#posts-container .card');
+    let selectedCategory = 'all';
+    let searchQuery = '';
 
+    const tagPills = document.querySelectorAll('#tag-container .tag-pill');
+    const categoryLinks = document.querySelectorAll('.sidebar-link[data-category]');
+    const postCards = document.querySelectorAll('#posts-container .post-card');
+    const postCountEl = document.getElementById('post-count');
+    const emptyState = document.getElementById('empty-state');
+    const searchInput = document.getElementById('search-input');
+
+    // --- 分类筛选 ---
+    categoryLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        selectedCategory = link.dataset.category;
+        categoryLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        filterPosts();
+      });
+    });
+
+    // --- 标签筛选 ---
     tagPills.forEach(tag => {
       tag.addEventListener('click', () => {
         const tagName = tag.dataset.tag;
@@ -146,16 +245,36 @@
       });
     });
 
+    // --- 搜索 ---
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value.toLowerCase().trim();
+      filterPosts();
+    });
+
     function filterPosts() {
+      let visibleCount = 0;
       postCards.forEach(card => {
         const cardTags = card.dataset.tags.split(',').map(t => t.trim());
-        if (selectedTags.size === 0) {
-          card.style.display = 'block';
-        } else {
-          const hasMatchingTag = Array.from(selectedTags).some(tag => cardTags.includes(tag));
-          card.style.display = hasMatchingTag ? 'block' : 'none';
-        }
+        const cardCategory = card.dataset.category;
+        const cardTitle = (card.dataset.title || '').toLowerCase();
+        const excerpt = card.querySelector('.post-excerpt').textContent.toLowerCase();
+
+        // 分类匹配
+        const categoryMatch = selectedCategory === 'all' || cardCategory === selectedCategory;
+
+        // 标签匹配
+        const tagMatch = selectedTags.size === 0 || Array.from(selectedTags).some(tag => cardTags.includes(tag));
+
+        // 搜索匹配
+        const searchMatch = !searchQuery || cardTitle.includes(searchQuery) || excerpt.includes(searchQuery);
+
+        const isVisible = categoryMatch && tagMatch && searchMatch;
+        card.style.display = isVisible ? 'block' : 'none';
+        if (isVisible) visibleCount++;
       });
+
+      postCountEl.textContent = visibleCount;
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
     }
   </script>
 </body>

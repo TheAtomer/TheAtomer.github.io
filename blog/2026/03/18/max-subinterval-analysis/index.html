@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>C++ vector进行去重 | AtomerCore</title>
+  <title>题目分析：寻找满足题意的最大子区间 | AtomerCore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
         <p class="hero-greeting">~/blog/posts</p>
         <h1 class="hero-title">
           <span class="hero-title-prefix">cat</span>
-          <span class="hero-title-text"> cpp-vector-dedup.md</span><span class="typing-cursor">|</span>
+          <span class="hero-title-text"> max-subinterval-analysis.md</span><span class="typing-cursor">|</span>
         </h1>
       </div>
     </div>
@@ -82,7 +82,7 @@
               </div>
               <div class="sidebar-tags">
                 <span class="tag-pill">C++</span>
-                <span class="tag-pill">Tips</span>
+                <span class="tag-pill">Algorithm</span>
               </div>
             </div>
 
@@ -98,32 +98,174 @@
 
         <main class="card post-content-card">
           <p class="post-meta-header">
-            <span>2025-10-25</span>
+            <span>2026-03-18</span>
             <span class="meta-divider">•</span>
             <span>C++</span>
             <span class="meta-divider">•</span>
-            <span class="meta-reading-time">~1 min read</span>
+            <span class="meta-reading-time">~5 min read</span>
           </p>
 
           <div class="post-body">
-            <h1>C++ vector进行去重</h1>
+            <h1>题目分析：寻找满足题意的最大子区间</h1>
 
-            <p>去重用到vector的unique()函数，代码如下：</p>
+            <p><strong>【牛客：空调遥控】</strong></p>
 
-            <pre><code>vector&lt;auto&gt; MyVector;
+            <p>题目链接：<a href="https://www.nowcoder.com/practice/7cb58d56b30c4280ac07ae4428022e03" target="_blank">https://www.nowcoder.com/practice/7cb58d56b30c4280ac07ae4428022e03</a></p>
 
-auto it = std::unique(MyVector.begin(), MyVector.end());
-MyVector.erase(it, MyVector.end());</code></pre>
+            <p>知识点：双指针、二分</p>
+
+            <pre><code>输入：6 2
+      1 5 3 2 4 6</code></pre>
+
+            <pre><code>输出：5</code></pre>
+
+            <p>说明：温度调成3或4，都可以满足5名队员同时进入训练状态</p>
+
+            <hr>
+
+            <p>当看见这一题后，可能会直接使用暴力枚举的方法。</p>
+
+            <h2 id="暴力枚举写法">暴力枚举写法</h2>
+
+            <pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+bool Satisfy(int i, int k, int p){
+    if(abs(i-k)&lt;=p){
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    int n,p;
+    cin&gt;&gt;n&gt;&gt;p;
+    vector&lt;int&gt; a(n);
+    for(int i=0; i&lt;n; i++){
+        cin&gt;&gt;a[i];
+    }
+
+    sort(a.begin(),a.end());
+
+    int best = 0;
+    for(int k=a[0]; k&lt;=a[n-1]; k++){
+        int count = 0;
+        for(int x:a){
+            if(Satisfy(x,k,p)){
+                count++;
+            }
+        }
+        best = max(best,count);
+    }
+    cout&lt;&lt;best;
+}</code></pre>
+
+            <p>但是由于数据量过大，暴力枚举的时间复杂度为 O(n²)，在数据量过大时会导致 TLE，所以需要对现有代码进行优化。</p>
+
+            <hr>
+
+            <h2 id="题目分析">题目分析</h2>
+
+            <p><strong>原命题</strong>：存在一个实数中心 k，使得对于子数组中的任意元素 x，都满足：k - p &lt;= x &lt;= k + p</p>
+
+            <p><strong>易得转化命题</strong>：对于子数组中的最小值 min_val 和最大值 max_val，满足：max_val - min_val &lt;= 2 * p</p>
+
+            <p>所以就可以转化为求序列中满足条件的最大子序列。</p>
+
+            <p>所以，可以使用双指针写法，寻找到满足 max_val - min_val &lt;= 2 * p 的最大子序列，然后求得其中元素个数即可。</p>
+
+            <h2 id="双指针-滑动窗口写法">双指针/滑动窗口写法</h2>
+
+            <pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n,p;
+    cin&gt;&gt;n&gt;&gt;p;
+    vector&lt;int&gt; a(n);
+    for(int i=0;i&lt;n;i++){
+        cin&gt;&gt;a[i];
+    }
+
+    sort(a.begin(),a.end());
+
+    int best = 0;
+    for(int right=0 ,left=0; right&lt;n; right++){   // 让右指针 i 从 0 遍历到 n-1
+
+        while(left&lt;=right &amp;&amp; (a[right] - a[left]) &gt; p*2){     //while 循环：收缩左边界
+            // 如果窗口不合法，就将左指针 left 向右移动一位，缩小窗口
+            left++;
+        }
+        //此时，窗口 [left, right] 是以 right 为右边界的、满足条件的最长合法窗口
+        best = max(best, right-left+1);
+    }
+    cout&lt;&lt;best;
+}</code></pre>
+
+            <p>使用双指针，时间复杂度为 O(n log n)，满足题目要求。</p>
+
+            <hr>
+
+            <h2 id="二分写法">二分写法</h2>
+
+            <p>当然，使用二分法也可以快速寻找到最大子序列。</p>
+
+            <pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, p;
+    cin &gt;&gt; n &gt;&gt; p;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i];
+    }
+
+    sort(a.begin(), a.end());
+
+    int best = 0;
+    for (int i = 0; i &lt; n; i++) {
+        // 计算右边界最大允许值
+        int right_limit = a[i] + 2 * p;
+
+        // 使用 upper_bound 找到第一个大于 right_limit 的位置
+        auto it = upper_bound(a.begin(), a.end(), right_limit);
+
+        // 第四步：计算当前窗口的长度
+        // [a.begin() + i, it) 这个区间内的所有元素都满足条件
+        // 元素个数 = it - (a.begin() + i) = (it - a.begin()) - i
+        int current_count = (int)(it - a.begin()) - i;
+
+        // 第五步：更新全局最大值
+        best = max(best, current_count);
+
+    }
+    cout &lt;&lt; best;
+}</code></pre>
+
+            <p>时间复杂度同样为 O(n log n)，满足题目要求。</p>
+
+            <hr>
+
+            <h2 id="总结">总结</h2>
+
+            <p>综上所述，面对有序的序列时，可以考虑使用双指针或二分进行优化。</p>
           </div>
 
           <nav class="post-nav">
-            <a class="post-nav-item" href="../../../09/19/markdown_basics/index.html">
+            <a class="post-nav-item" href="../../../03/12/greater-less-comparator/index.html">
               <span class="post-nav-label">← older</span>
-              <span class="post-nav-title">Markdown Basic Syntax</span>
+              <span class="post-nav-title">C++ STL中std::greater、std::less与自定义比较器</span>
             </a>
-            <a class="post-nav-item next" href="../../../02/10/obesity-risk-prediction/index.html">
+            <a class="post-nav-item next disabled">
               <span class="post-nav-label">newer →</span>
-              <span class="post-nav-title">肥胖风险多分类预测项目</span>
+              <span class="post-nav-title">No newer posts</span>
             </a>
           </nav>
         </main>

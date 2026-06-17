@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ STL中std::greater、std::less与自定义比较器 | AtomerCore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="../../../../../css/styles.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-logo">
+          <span class="header-logo-text">AtomerCore</span>
+        </div>
+        <nav class="nav">
+          <a href="../../../../../index.html" class="nav-link">Home</a>
+          <a href="../../../../../index.html#about" class="nav-link">About</a>
+          <a href="../../../../../index.html#skills" class="nav-link">Skills</a>
+          <a href="../../../../../index.html#projects" class="nav-link">Projects</a>
+          <a href="../../../../index.html" class="nav-link">Blog</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero post-hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-greeting">~/blog/posts</p>
+        <h1 class="hero-title">
+          <span class="hero-title-prefix">cat</span>
+          <span class="hero-title-text"> greater-less-comparator.md</span><span class="typing-cursor">|</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="post-section">
+    <div class="container">
+      <div class="post-layout">
+        <aside class="post-sidebar">
+          <div class="card">
+            <div class="sidebar-nav-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <a href="../../../../index.html" class="hero-link">cd ../</a>
+              </div>
+            </div>
+
+            <div class="sidebar-profile">
+              <div class="sidebar-avatar">
+                <img src="../../../../../src/head.png" alt="Avatar">
+              </div>
+              <div class="sidebar-name">AtomerCore</div>
+            </div>
+
+            <div class="sidebar-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">ls categories</span>
+              </div>
+              <div class="sidebar-links">
+                <a href="../../../../index.html" class="sidebar-link">C++</a>
+              </div>
+            </div>
+
+            <div class="sidebar-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">ls tags</span>
+              </div>
+              <div class="sidebar-tags">
+                <span class="tag-pill">C++</span>
+                <span class="tag-pill">STL</span>
+              </div>
+            </div>
+
+            <div class="toc-section" id="toc-section" style="display: none;">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">cat TOC</span>
+              </div>
+              <ul class="toc-list" id="toc-list"></ul>
+            </div>
+          </div>
+        </aside>
+
+        <main class="card post-content-card">
+          <p class="post-meta-header">
+            <span>2026-03-12</span>
+            <span class="meta-divider">•</span>
+            <span>C++</span>
+            <span class="meta-divider">•</span>
+            <span class="meta-reading-time">~6 min read</span>
+          </p>
+
+          <div class="post-body">
+            <h1>C++ STL中std::greater、std::less与自定义比较器</h1>
+
+            <p>在编程过程中，通常需要用到自定义排序，这时候可以用到STL中提供的<code>std::greater</code>和<code>std::less</code>，或者自定义比较器。</p>
+
+            <h2 id="一-stdgreater与-stdless">一、std::greater与 std::less</h2>
+
+            <p><code>std::greater</code>与<code>std::less</code>是定义在<code>&lt;functional&gt;</code>头文件中的函数对象，它们通过重载<code>operator()</code>来提供二元比较能力。这意味着它们既可以像类型一样用于模板参数，也可以像函数一样被调用。</p>
+
+            <p>以下是它们的基本模板结构：</p>
+
+            <pre><code>// std::greater 定义
+template &lt;class T = void&gt;
+struct greater {
+    constexpr bool operator()(const T&amp; lhs, const T&amp; rhs) const {
+        return lhs &gt; rhs;
+    }
+};
+
+// std::less 定义
+template &lt;class T = void&gt;
+struct less {
+    constexpr bool operator()(const T&amp; lhs, const T&amp; rhs) const {
+        return lhs &lt; rhs;
+    }
+};</code></pre>
+
+            <p><em>从 C++14 开始，引入了"透明比较器"特性。标准库为模板参数为 void 的情况（即省略参数写作<code>std::greater&lt;&gt;</code>或<code>std::less&lt;&gt;</code>时）提供了专门的特化版本，从而支持异构类型的自动推导。</em></p>
+
+            <pre><code>std::sort(vec.begin(), vec.end(), std::greater&lt;&gt;{});</code></pre>
+
+            <p>对于排序：</p>
+            <ul>
+              <li><code>std::greater</code>可作为降序比较器（从左到右遍历下标时，数组元素是从大到小）</li>
+              <li><code>std::less</code>可作为升序比较器（从左到右遍历下标时，数组元素是从小到大）</li>
+            </ul>
+
+            <p>对于建堆：</p>
+            <ul>
+              <li><code>std::greater</code>变为小顶堆（堆顶元素是最小值）</li>
+              <li><code>std::less</code>变为大顶堆（堆顶元素是最大值）</li>
+            </ul>
+
+            <p><em>（因为C++的<code>priority_queue</code>默认把比较结果为true的元素往堆底放。greater意味着父节点大于子节点时返回true，导致大元素下沉，小元素浮到堆顶。）</em></p>
+
+            <p>从上文基本模板结构可以看出，本质上<code>std::greater</code>与<code>std::less</code>都是通过函数调用运算符<code>operator()</code>实现二元比较能力，进而实现排序、建堆。</p>
+
+            <h3>典型应用场景</h3>
+
+            <h4>1. std::sort中的降序排序</h4>
+            <pre><code>#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;functional&gt;
+
+std::vector&lt;int&gt; scores = {85, 92, 78, 96, 88};
+
+// 使用std::greater实现降序排列
+std::sort(scores.begin(), scores.end(), std::greater&lt;&gt;{});
+// 结果: 96, 92, 88, 85, 78</code></pre>
+
+            <h4>2. priority_queue构建最小堆</h4>
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+#include &lt;functional&gt;
+
+// 构建最小堆
+std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;&gt;&gt; min_heap;
+
+min_heap.push(3);
+min_heap.push(1);
+min_heap.push(4);
+
+while (!min_heap.empty()) {
+    std::cout &lt;&lt; min_heap.top() &lt;&lt; " "; // 输出: 1 3 4
+    min_heap.pop();
+}</code></pre>
+
+            <h4>3. set实现降序集合</h4>
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;set&gt;
+#include &lt;functional&gt;
+
+// 创建一个按降序排列的整数集合
+std::set&lt;int, std::greater&lt;&gt;&gt; desc_set = {3, 1, 4};
+
+for (int x : desc_set) {
+    std::cout &lt;&lt; x &lt;&lt; " "; // 输出: 4 3 1
+}</code></pre>
+
+            <h3>扩展：C++20的std::ranges::greater与std::ranges::less</h3>
+
+            <p><em>扩展内容需C++20+标准支持</em></p>
+
+            <p>C++20在<code>&lt;functional&gt;</code>头文件中引入了<code>std::ranges::greater</code>和<code>std::ranges::less</code>。这两个比较器专为ranges算法设计，并非传统<code>std::greater&lt;&gt;</code>和<code>std::less&lt;&gt;</code>的简单复用。其底层基于C++20 Concepts机制，实现了更严格的类型约束。</p>
+
+            <p>核心特点是：只有当参与比较的类型满足<code>std::totally_ordered_with</code>概念时，相关算法才能顺利编译。这样不仅使错误信息更加直观易懂，而且自然而然支持ranges算法中的投影（Projection）功能。</p>
+
+            <p>使用示例：</p>
+
+            <h4>1. 配合std::ranges::sort使用</h4>
+            <pre><code>#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;functional&gt;
+
+std::vector&lt;int&gt; nums = {3, 1, 4, 1, 5};
+
+// C++20 Ranges + 预实例化比较器
+std::ranges::sort(nums, std::ranges::greater{});
+// 结果: 5, 4, 3, 1, 1
+
+// 等价于传统写法
+// std::ranges::sort(nums, std::greater&lt;&gt;{});</code></pre>
+
+            <h4>2. 配合 std::ranges::min_element 等算法</h4>
+            <pre><code>// 直接返回最小值的迭代器，无需写std::less&lt;&gt;{}
+auto min_it = std::ranges::min_element(nums);</code></pre>
+
+            <h4>3. 与投影（Projection）结合</h4>
+            <pre><code>struct Person {
+    std::string name;
+    int age;
+};
+
+std::vector&lt;Person&gt; people = {{"Alice", 30}, {"Bob", 25}};
+
+// 按age降序排序：比较器 + 投影
+std::ranges::sort(people,
+                  std::ranges::greater{},
+                  &amp;Person::age);  // 投影：提取age字段比较
+// 结果: Alice(30), Bob(25)</code></pre>
+
+            <h2 id="二-自定义比较器">二、自定义比较器</h2>
+
+            <p>当面对复杂数据类型（如结构体）或多字段排序需求时，<code>std::less</code> 和 <code>std::greater</code> 就显得力不从心了。此时我们需要自定义比较函数。任何满足严格弱序（Strict Weak Ordering）的可调用对象都可以作为STL的比较器。</p>
+
+            <p>即比较规则要满足：</p>
+            <ul>
+              <li><strong>反自反性</strong>：comp(a,a)必须为false。</li>
+              <li><strong>非对称性</strong>：若 comp(a,b)为true，则comp(b,a)必须为false。</li>
+              <li><strong>传递性</strong>：若 comp(a,b)和comp(b,c)为true，则comp(a,c)必须为true。</li>
+              <li><strong>传递的不可比性</strong>：如果!comp(a,b) &amp;&amp; !comp(b,a)，且!comp(b,c) &amp;&amp; !comp(c,b)，那么 !comp(a,c) &amp;&amp; !comp(c,a)。</li>
+            </ul>
+
+            <p>有下面几种方式可以自定义比较器：</p>
+
+            <h3>1. 函数对象（仿函数）</h3>
+            <pre><code>struct CompareById {
+    bool operator()(const Student&amp; a, const Student&amp; b) const {
+        return a.id &lt; b.id; // 按学号升序
+    }
+};
+std::sort(students.begin(), students.end(), CompareById{});</code></pre>
+
+            <h3>2. 通过元素类型的运算符重载</h3>
+            <pre><code>struct Node {
+    int chinese, math, english, sum;
+    bool operator&lt;(const Node&amp; b) const {
+        if (sum != b.sum) return sum &lt; b.sum;
+        if (chinese != b.chinese) return chinese &lt; b.chinese;
+        if (math != b.math) return math &lt; b.math;
+        return english &lt; b.english;
+    }
+};
+priority_queue&lt;Node&gt; s;
+// 实现优先队列传递结构体变量</code></pre>
+
+            <h3>3. Lambda表达式</h3>
+            <pre><code>// 按成绩降序
+std::sort(students.begin(), students.end(),
+    [](const Student&amp; a, const Student&amp; b) {
+        return a.score &gt; b.score;
+    });</code></pre>
+
+            <h3>4. 普通函数</h3>
+            <pre><code>// 按姓名升序
+bool compareByName(const Student&amp; a, const Student&amp; b) {
+    return a.name &lt; b.name;
+}
+std::sort(students.begin(), students.end(), compareByName);</code></pre>
+          </div>
+
+          <nav class="post-nav">
+            <a class="post-nav-item" href="../../../03/10/lower-bound-upper-bound/index.html">
+              <span class="post-nav-label">← older</span>
+              <span class="post-nav-title">C++ STL中lower_bound()和upper_bound()函数</span>
+            </a>
+            <a class="post-nav-item next" href="../../../03/18/max-subinterval-analysis/index.html">
+              <span class="post-nav-label">newer →</span>
+              <span class="post-nav-title">题目分析：寻找满足题意的最大子区间</span>
+            </a>
+          </nav>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 AtomerCore. Built with care.</p>
+    </div>
+  </footer>
+
+  <script src="../../../../../js/main.js"></script>
+  <script>
+    // Reading progress bar
+    const progressBar = document.getElementById('readingProgress');
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (window.scrollY / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    });
+
+    // Auto-generate TOC
+    const postBody = document.querySelector('.post-body');
+    const tocSection = document.getElementById('toc-section');
+    const tocList = document.getElementById('toc-list');
+    if (postBody && tocList) {
+      const headings = postBody.querySelectorAll('h2, h3');
+      if (headings.length > 0) {
+        tocSection.style.display = 'block';
+        headings.forEach((heading, index) => {
+          if (!heading.id) heading.id = 'toc-heading-' + index;
+          const item = document.createElement('li');
+          item.className = 'toc-item';
+          const link = document.createElement('a');
+          link.href = '#' + heading.id;
+          link.textContent = heading.textContent;
+          link.className = 'toc-link' + (heading.tagName === 'H3' ? ' toc-h3' : '');
+          link.dataset.target = heading.id;
+          item.appendChild(link);
+          tocList.appendChild(item);
+        });
+        const tocLinks = tocList.querySelectorAll('.toc-link');
+        window.addEventListener('scroll', () => {
+          let current = '';
+          headings.forEach(h => {
+            if (window.scrollY >= h.offsetTop - 120) current = h.id;
+          });
+          tocLinks.forEach(l => l.classList.toggle('active', l.dataset.target === current));
+        });
+      }
+    }
+
+    // Back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

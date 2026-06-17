@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll > 50) {
-      header.style.background = 'rgba(0, 0, 0, 0.9)';
+      header.style.background = 'rgba(236, 233, 224, 0.95)';
     } else {
-      header.style.background = 'rgba(0, 0, 0, 0.8)';
+      header.style.background = 'rgba(236, 233, 224, 0.82)';
     }
   });
 

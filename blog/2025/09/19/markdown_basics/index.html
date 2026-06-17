@@ -6,11 +6,14 @@
   <title>Markdown Basic Syntax | AtomerCore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="../../../../../css/styles.css">
 </head>
 <body>
+  <div class="bg-grid"></div>
+  <div class="reading-progress" id="readingProgress"></div>
+
   <header class="header">
     <div class="container">
       <div class="header-inner">
@@ -51,112 +54,133 @@
             <div class="sidebar-nav-section">
               <div class="hero-link-line">
                 <span class="link-prefix">$</span>
-                <a href="../../../../index.html" class="hero-link" style="color: var(--accent-purple); text-decoration: none;">cd ../</a>
+                <a href="../../../../index.html" class="hero-link">cd ../</a>
               </div>
             </div>
-            
+
             <div class="sidebar-profile">
               <div class="sidebar-avatar">
                 <img src="../../../../../src/head.png" alt="Avatar">
               </div>
               <div class="sidebar-name">AtomerCore</div>
             </div>
-            
+
             <div class="sidebar-section">
               <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls categories</span>
               </div>
               <div class="sidebar-links">
-                <a href="#" class="sidebar-link">post</a>
-                <a href="#" class="sidebar-link">C++</a>
+                <a href="../../../../index.html" class="sidebar-link">post</a>
               </div>
             </div>
-            
+
             <div class="sidebar-section">
               <div class="hero-link-line">
                 <span class="link-prefix">$</span>
                 <span class="hero-link">ls tags</span>
               </div>
               <div class="sidebar-tags">
-                <span class="tag-pill">C++</span>
                 <span class="tag-pill">Practical</span>
-                <span class="tag-pill">Tips</span>
-                <span class="tag-pill">test</span>
               </div>
+            </div>
+
+            <div class="toc-section" id="toc-section" style="display: none;">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">cat TOC</span>
+              </div>
+              <ul class="toc-list" id="toc-list"></ul>
             </div>
           </div>
         </aside>
-        
+
         <main class="card post-content-card">
-          <p class="post-meta-header">2025-09-19 • post • Practical</p>
-          
+          <p class="post-meta-header">
+            <span>2025-09-19</span>
+            <span class="meta-divider">•</span>
+            <span>post</span>
+            <span class="meta-divider">•</span>
+            <span class="meta-reading-time">~4 min read</span>
+          </p>
+
           <div class="post-body">
             <h1>Markdown基础语法</h1>
-            
-            <h2>什么是 Markdown?</h2>
+
+            <h2 id="什么是-markdown">什么是 Markdown?</h2>
             <p>Markdown 是一种轻量级的标记语言，设计用于让普通文本具有丰富的格式表现，同时保留文本内容的易读性和易写性。它通过简单直观的标记符号来实现文档的格式化，广泛应用于技术文档、博客文章、电子邮件、笔记和协作文档的编写。</p>
-            
-            <h2>为什么选择 Markdown?</h2>
+
+            <h2 id="为什么选择-markdown">为什么选择 Markdown?</h2>
             <ol>
               <li>简单直观：语法非常容易掌握，只需熟悉常见标记符号即可快速上手。</li>
               <li>跨平台支持：支持多种平台和工具，如 GitHub、Notion、VS Code、Jupyter Notebook 等。</li>
               <li>多格式输出：文档可以转换为 HTML、PDF、Word 等多种格式，适应不同需求。</li>
               <li>专注创作：无需复杂的排版工具，专注内容本身，提高写作效率。</li>
             </ol>
-            
-            <h2>Markdown 语法详解</h2>
+
+            <h2 id="markdown-语法详解">Markdown 语法详解</h2>
             <p>以下是 Markdown 的常用语法及其详细示例：</p>
-            
+
             <h3>1. 标题</h3>
             <p>Markdown 使用 <code>#</code> 符号来表示标题，支持六级标题，<code>#</code> 的数量代表标题的级别。</p>
-            
+
             <h3>2. 段落与换行</h3>
             <p>普通的文本直接书写即可。若需要换行，在行尾添加两个空格。</p>
-            
+
             <h3>3. 强调</h3>
             <p>Markdown 支持斜体和加粗，以及两者的组合。</p>
-            
+
             <h3>4. 列表</h3>
             <p>Markdown 支持无序列表和有序列表。</p>
-            
+
             <h4>无序列表</h4>
             <p>使用 <code>-</code>、<code>*</code> 或 <code>+</code> 作为标记符，子列表可通过缩进实现。</p>
-            
+
             <h4>有序列表</h4>
             <p>使用数字加点 <code>.</code>，数字顺序可以不连续，最终会按顺序渲染，子列表同样可通过缩进实现。</p>
-            
+
             <h3>5. 链接</h3>
             <p>可添加基础超链接，也可添加标题提示（鼠标悬停时显示）。</p>
-            
+
             <h3>6. 图片</h3>
             <p>添加图片与链接类似，只需在前面加一个 <code>!</code>，图片可以是本地图片或网络图片（图床链接）。</p>
-            
+
             <h3>7. 引用</h3>
             <p>引用使用 <code>&gt;</code> 进行标记，支持嵌套引用（多个 <code>&gt;</code> 叠加）。</p>
-            
+
             <h3>8. 代码块</h3>
             <p>分为行内代码和多行代码块，多行代码块支持指定编程语言以实现语法高亮。</p>
-            
+
             <h4>行内代码</h4>
             <p>用反引号 <code>`</code> 包裹代码内容。</p>
-            
+
             <h4>多行代码块</h4>
             <p>用三个反引号包裹代码内容，在开头反引号后指定编程语言。</p>
-            
+
             <h3>9. 表格</h3>
             <p>使用 <code>|</code> 分隔列，<code>-</code> 分隔表头与表格内容（<code>-</code> 数量至少1个，可通过 <code>:</code> 调整列对齐方式，默认左对齐）。</p>
-            
+
             <h3>10. 分隔线</h3>
             <p>使用三个或更多的 <code>-</code>、<code>*</code> 或 <code>_</code> 创建分隔线，符号之间可加空格，不可与其他内容同行。</p>
           </div>
+
+          <nav class="post-nav">
+            <a class="post-nav-item disabled">
+              <span class="post-nav-label">← older</span>
+              <span class="post-nav-title">No older posts</span>
+            </a>
+            <a class="post-nav-item next" href="../../../10/25/C++ vector进行去重/index.html">
+              <span class="post-nav-label">newer →</span>
+              <span class="post-nav-title">C++ vector进行去重</span>
+            </a>
+          </nav>
         </main>
       </div>
     </div>
   </section>
 
-  <button class="back-to-top" id="backToTopBtn">
-    <i class="fa fa-arrow-up"></i>
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
   </button>
 
   <footer class="footer">
@@ -167,21 +191,52 @@
 
   <script src="../../../../../js/main.js"></script>
   <script>
-    const backToTopBtn = document.getElementById('backToTopBtn');
-    
+    // Reading progress bar
+    const progressBar = document.getElementById('readingProgress');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
-      }
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (window.scrollY / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
     });
-    
+
+    // Auto-generate TOC
+    const postBody = document.querySelector('.post-body');
+    const tocSection = document.getElementById('toc-section');
+    const tocList = document.getElementById('toc-list');
+    if (postBody && tocList) {
+      const headings = postBody.querySelectorAll('h2, h3');
+      if (headings.length > 0) {
+        tocSection.style.display = 'block';
+        headings.forEach((heading, index) => {
+          if (!heading.id) heading.id = 'toc-heading-' + index;
+          const item = document.createElement('li');
+          item.className = 'toc-item';
+          const link = document.createElement('a');
+          link.href = '#' + heading.id;
+          link.textContent = heading.textContent;
+          link.className = 'toc-link' + (heading.tagName === 'H3' ? ' toc-h3' : '');
+          link.dataset.target = heading.id;
+          item.appendChild(link);
+          tocList.appendChild(item);
+        });
+        const tocLinks = tocList.querySelectorAll('.toc-link');
+        window.addEventListener('scroll', () => {
+          let current = '';
+          headings.forEach(h => {
+            if (window.scrollY >= h.offsetTop - 120) current = h.id;
+          });
+          tocLinks.forEach(l => l.classList.toggle('active', l.dataset.target === current));
+        });
+      }
+    }
+
+    // Back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+    });
     backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>

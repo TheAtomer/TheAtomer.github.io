@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ STL中lower_bound()和upper_bound()函数 | AtomerCore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="../../../../../css/styles.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-logo">
+          <span class="header-logo-text">AtomerCore</span>
+        </div>
+        <nav class="nav">
+          <a href="../../../../../index.html" class="nav-link">Home</a>
+          <a href="../../../../../index.html#about" class="nav-link">About</a>
+          <a href="../../../../../index.html#skills" class="nav-link">Skills</a>
+          <a href="../../../../../index.html#projects" class="nav-link">Projects</a>
+          <a href="../../../../index.html" class="nav-link">Blog</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero post-hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-greeting">~/blog/posts</p>
+        <h1 class="hero-title">
+          <span class="hero-title-prefix">cat</span>
+          <span class="hero-title-text"> lower-bound-upper-bound.md</span><span class="typing-cursor">|</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="post-section">
+    <div class="container">
+      <div class="post-layout">
+        <aside class="post-sidebar">
+          <div class="card">
+            <div class="sidebar-nav-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <a href="../../../../index.html" class="hero-link">cd ../</a>
+              </div>
+            </div>
+
+            <div class="sidebar-profile">
+              <div class="sidebar-avatar">
+                <img src="../../../../../src/head.png" alt="Avatar">
+              </div>
+              <div class="sidebar-name">AtomerCore</div>
+            </div>
+
+            <div class="sidebar-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">ls categories</span>
+              </div>
+              <div class="sidebar-links">
+                <a href="../../../../index.html" class="sidebar-link">C++</a>
+              </div>
+            </div>
+
+            <div class="sidebar-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">ls tags</span>
+              </div>
+              <div class="sidebar-tags">
+                <span class="tag-pill">C++</span>
+                <span class="tag-pill">STL</span>
+                <span class="tag-pill">Algorithm</span>
+              </div>
+            </div>
+
+            <div class="toc-section" id="toc-section" style="display: none;">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">cat TOC</span>
+              </div>
+              <ul class="toc-list" id="toc-list"></ul>
+            </div>
+          </div>
+        </aside>
+
+        <main class="card post-content-card">
+          <p class="post-meta-header">
+            <span>2026-03-10</span>
+            <span class="meta-divider">•</span>
+            <span>C++</span>
+            <span class="meta-divider">•</span>
+            <span class="meta-reading-time">~5 min read</span>
+          </p>
+
+          <div class="post-body">
+            <h1>C++ STL中lower_bound()和upper_bound()函数</h1>
+
+            <p>查找操作是程序中最常见的需求之一。如果面对一个无序的数组，我们只能通过线性扫描逐个比对，时间复杂度为 O(n)，效率低下。然而，当数据已经有序时，我们可以借助更高效的算法实现"精准定位"。C++ 标准模板库（STL）为此提供了两个强大的工具：<code>std::lower_bound()</code> 和 <code>std::upper_bound()</code>。</p>
+
+            <p>这两个函数均基于二分查找机制实现，能够在 O(log n) 时间内完成查找任务，极大地提升了性能。相较于手动编写二分逻辑，使用 STL 提供的版本不仅代码更简洁，而且经过高度优化，行为定义明确，不易出错。</p>
+
+            <h2 id="基本定义与语法">基本定义与语法</h2>
+
+            <p><code>lower_bound()</code>和<code>upper_bound()</code>的标准函数原型如下：</p>
+
+            <pre><code>// lower_bound 原型
+template &lt;class ForwardIterator, class T&gt;
+ForwardIterator lower_bound(ForwardIterator first, ForwardIterator last, const T&amp; val);
+
+template &lt;class ForwardIterator, class T, class Compare&gt;
+ForwardIterator lower_bound(ForwardIterator first, ForwardIterator last, const T&amp; val, Compare comp);
+
+// upper_bound 原型
+template &lt;class ForwardIterator, class T&gt;
+ForwardIterator upper_bound(ForwardIterator first, ForwardIterator last, const T&amp; val);
+
+template &lt;class ForwardIterator, class T, class Compare&gt;
+ForwardIterator upper_bound(ForwardIterator first, ForwardIterator last, const T&amp; val, Compare comp);</code></pre>
+
+            <p>其中各参数含义如下：</p>
+            <ul>
+              <li><strong>first, last</strong>：构成一个左闭右开区间 [first, last)，表示待搜索的范围。</li>
+              <li><strong>val</strong>：要查找的目标值。</li>
+              <li><strong>comp</strong>：可选的比较函数对象，用于自定义排序规则。</li>
+            </ul>
+
+            <p>函数返回一个迭代器。若成功找到符合条件的元素，则指向该位置；否则返回 last，表示目标应插入的位置。值得注意的是，这两个函数要求输入区间必须已按相应规则排序，否则结果未定义。</p>
+
+            <h2 id="功能差异对比">功能差异对比</h2>
+
+            <p>尽管 <code>lower_bound</code> 和 <code>upper_bound</code> 都用于在有序序列中定位边界，但它们的语义存在关键区别：</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>特性</th>
+                  <th>lower_bound</th>
+                  <th>upper_bound</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>查找条件</td>
+                  <td>第一个 ≥ val 的元素</td>
+                  <td>第一个 &gt; val 的元素</td>
+                </tr>
+                <tr>
+                  <td>插入语义</td>
+                  <td>可插入而不破坏顺序的最小位置</td>
+                  <td>可插入而不破坏顺序的最大位置</td>
+                </tr>
+                <tr>
+                  <td>目标不存在时</td>
+                  <td>返回首个大于 val 的位置</td>
+                  <td>返回首个大于 val 的位置</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>以数组 <code>{1, 2, 4, 4, 4, 6, 7}</code> 为例，查找值 4：</p>
+            <ul>
+              <li><code>lower_bound</code> 返回指向第一个 4 的迭代器（索引 2），因为它满足"不小于"条件。</li>
+              <li><code>upper_bound</code> 返回指向 6 的迭代器（索引 5），因为它是第一个严格大于 4 的元素。</li>
+            </ul>
+
+            <p>由此可见，两者共同圈定了值 4 在数组中的完整范围 [2, 5)，即所有等于 4 的元素都位于此区间内。</p>
+
+            <h2 id="工作原理">工作原理</h2>
+
+            <p><code>lower_bound</code> 和 <code>upper_bound</code> 的底层均采用二分查找策略，维护一个动态变化的搜索区间。其核心在于比较逻辑的不同。</p>
+
+            <p>对于 <code>lower_bound</code>，算法目标是找到最小下标 i 满足 arr[i] &gt;= value。伪代码如下（为迭代器运算）：</p>
+
+            <pre><code>while (first &lt; last) {
+    auto mid = first + (last - first) / 2;
+    if (*mid &lt; value)
+        first = mid + 1;  // 当前值太小，答案在右半区
+    else
+        last = mid;       // 当前值足够大，保留作为候选
+}
+return first;</code></pre>
+
+            <p>而对于 <code>upper_bound</code>，目标是找到最小下标 i 满足 arr[i] &gt; value，判断条件变为：</p>
+
+            <pre><code>if (*mid &lt;= value)
+    first = mid + 1;  // 包含等于的情况，继续向右
+else
+    last = mid;</code></pre>
+
+            <p>两者的唯一区别在于对"等于"情况的处理方式，这决定了最终定位的是"左边界"还是"右边界"。</p>
+
+            <h2 id="典型应用场景">典型应用场景</h2>
+
+            <h3>1. 判断元素是否存在</h3>
+            <p>结合 <code>lower_bound</code> 可高效判断某值是否存在：</p>
+            <pre><code>bool exists(const vector&lt;int&gt;&amp; v, int target) {
+    auto it = lower_bound(v.begin(), v.end(), target);
+    return it != v.end() &amp;&amp; *it == target;  // 检查是否越界且值匹配
+}</code></pre>
+
+            <h3>2. 统计元素出现次数</h3>
+            <p>利用二者差值可直接计算重复元素个数：</p>
+            <pre><code>int count(const vector&lt;int&gt;&amp; v, int target) {
+    return upper_bound(v.begin(), v.end(), target) -
+           lower_bound(v.begin(), v.end(), target);
+}</code></pre>
+
+            <h3>3. 有序插入</h3>
+            <p>保持容器有序性的插入方式：</p>
+            <pre><code>void insert_sorted(vector&lt;int&gt;&amp; v, int value) {
+    auto pos = lower_bound(v.begin(), v.end(), value);
+    v.insert(pos, value);  // 插入后仍保持升序
+}</code></pre>
+
+            <h3>4. 自定义比较函数（降序处理）</h3>
+            <p>当序列按降序排列时，需传入 <code>greater()</code>：</p>
+            <pre><code>vector&lt;int&gt; desc = {7, 5, 4, 4, 2, 1};
+auto lb = lower_bound(desc.begin(), desc.end(), 4, greater&lt;int&gt;());
+// 此时 lower_bound 表现为查找第一个 ≤ 4 的元素</code></pre>
+
+            <h3>5. LIS 最长上升子序列</h3>
+            <p>在动态规划求解 LIS 时，常用 <code>lower_bound()</code> 找到替换位置：</p>
+            <pre><code>int lengthOfLIS(vector&lt;int&gt;&amp; nums) {
+    vector&lt;int&gt; tails;
+    for (int num : nums) {
+        auto it = lower_bound(tails.begin(), tails.end(), num);
+        if (it == tails.end())
+            tails.push_back(num);
+        else
+            *it = num;
+    }
+    return tails.size();
+}</code></pre>
+
+            <h2 id="总结">总结</h2>
+
+            <p><code>lower_bound()</code> 与 <code>upper_bound()</code> 是 C++ STL 中极为精巧的设计，通过微小的逻辑差异，分别解决了"下界"与"上界"的定位问题。</p>
+          </div>
+
+          <nav class="post-nav">
+            <a class="post-nav-item" href="../../../02/10/obesity-risk-prediction/index.html">
+              <span class="post-nav-label">← older</span>
+              <span class="post-nav-title">肥胖风险多分类预测项目</span>
+            </a>
+            <a class="post-nav-item next" href="../../../12/greater-less-comparator/index.html">
+              <span class="post-nav-label">newer →</span>
+              <span class="post-nav-title">C++ STL中std::greater、std::less与自定义比较器</span>
+            </a>
+          </nav>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 AtomerCore. Built with care.</p>
+    </div>
+  </footer>
+
+  <script src="../../../../../js/main.js"></script>
+  <script>
+    // Reading progress bar
+    const progressBar = document.getElementById('readingProgress');
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (window.scrollY / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    });
+
+    // Auto-generate TOC
+    const postBody = document.querySelector('.post-body');
+    const tocSection = document.getElementById('toc-section');
+    const tocList = document.getElementById('toc-list');
+    if (postBody && tocList) {
+      const headings = postBody.querySelectorAll('h2, h3');
+      if (headings.length > 0) {
+        tocSection.style.display = 'block';
+        headings.forEach((heading, index) => {
+          if (!heading.id) heading.id = 'toc-heading-' + index;
+          const item = document.createElement('li');
+          item.className = 'toc-item';
+          const link = document.createElement('a');
+          link.href = '#' + heading.id;
+          link.textContent = heading.textContent;
+          link.className = 'toc-link' + (heading.tagName === 'H3' ? ' toc-h3' : '');
+          link.dataset.target = heading.id;
+          item.appendChild(link);
+          tocList.appendChild(item);
+        });
+        const tocLinks = tocList.querySelectorAll('.toc-link');
+        window.addEventListener('scroll', () => {
+          let current = '';
+          headings.forEach(h => {
+            if (window.scrollY >= h.offsetTop - 120) current = h.id;
+          });
+          tocLinks.forEach(l => l.classList.toggle('active', l.dataset.target === current));
+        });
+      }
+    }
+
+    // Back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
