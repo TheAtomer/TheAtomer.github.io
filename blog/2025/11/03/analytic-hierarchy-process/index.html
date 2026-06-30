@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数学建模——层次分析法 | AtomerCore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="../../../../../css/styles.css">
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-logo">
+          <span class="header-logo-text">AtomerCore</span>
+        </div>
+        <nav class="nav">
+          <a href="../../../../../index.html" class="nav-link">Home</a>
+          <a href="../../../../../index.html#about" class="nav-link">About</a>
+          <a href="../../../../../index.html#skills" class="nav-link">Skills</a>
+          <a href="../../../../../index.html#projects" class="nav-link">Projects</a>
+          <a href="../../../../index.html" class="nav-link">Blog</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero post-hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-greeting">~/blog/posts</p>
+        <h1 class="hero-title">
+          <span class="hero-title-prefix">cat</span>
+          <span class="hero-title-text"> analytic-hierarchy-process.md</span><span class="typing-cursor">|</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="post-section">
+    <div class="container">
+      <div class="post-layout">
+        <aside class="post-sidebar">
+          <div class="card">
+            <div class="sidebar-nav-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <a href="../../../../index.html" class="hero-link">cd ../</a>
+              </div>
+            </div>
+
+            <div class="sidebar-profile">
+              <div class="sidebar-avatar">
+                <img src="../../../../../src/head.png" alt="Avatar">
+              </div>
+              <div class="sidebar-name">AtomerCore</div>
+            </div>
+
+            <div class="sidebar-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">ls categories</span>
+              </div>
+              <div class="sidebar-links">
+                <a href="../../../../index.html" class="sidebar-link">Math</a>
+              </div>
+            </div>
+
+            <div class="sidebar-section">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">ls tags</span>
+              </div>
+              <div class="sidebar-tags">
+                <span class="tag-pill">Math</span>
+                <span class="tag-pill">AHP</span>
+                <span class="tag-pill">Mathematical Modeling</span>
+              </div>
+            </div>
+
+            <div class="toc-section" id="toc-section" style="display: none;">
+              <div class="hero-link-line">
+                <span class="link-prefix">$</span>
+                <span class="hero-link">cat TOC</span>
+              </div>
+              <ul class="toc-list" id="toc-list"></ul>
+            </div>
+          </div>
+        </aside>
+
+        <main class="card post-content-card">
+          <p class="post-meta-header">
+            <span>2025-11-03</span>
+            <span class="meta-divider">•</span>
+            <span>Math</span>
+            <span class="meta-divider">•</span>
+            <span class="meta-reading-time">~6 min read</span>
+          </p>
+
+          <div class="post-body">
+            <h1>数学建模——层次分析法</h1>
+
+            <h2 id="模型讲解">模型讲解</h2>
+
+            <p>层次分析法主要针对评价决策类题目，评价或者选择更好、更优的方案。</p>
+
+            <p>过程：</p>
+
+            <ol>
+              <li>找到衡量方案的指标</li>
+              <li>量化指标</li>
+              <li>找到评价体系</li>
+              <li>综合考虑所有的指标</li>
+            </ol>
+
+            <p>本文章以以下情境为例：</p>
+
+            <p><strong>选一个明星参加活动，有三个明星：A、B、C，选择哪位？</strong></p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>明星</th>
+                  <th>粉丝数</th>
+                  <th>颜值</th>
+                  <th>作品质量</th>
+                  <th>作品数量</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>A</td><td>6000w</td><td>10</td><td>6.5</td><td>25</td></tr>
+                <tr><td>B</td><td>3400w</td><td>6</td><td>8.1</td><td>46</td></tr>
+                <tr><td>C</td><td>5500w</td><td>8</td><td>7.5</td><td>31</td></tr>
+              </tbody>
+            </table>
+
+            <h2 id="归一化处理">归一化处理</h2>
+
+            <p>首先应该使指标在同一数量级且保证在同一指标下其差距不变。</p>
+
+            <p><strong>归一化处理其中一个方法：若有三个指标，指标的数组 [a, b, c] 处理后得到 $\left[\frac{a}{a+b+c}, \frac{b}{a+b+c}, \frac{c}{a+b+c}\right]$</strong></p>
+
+            <p>其中 $\frac{a}{a+b+c} + \frac{b}{a+b+c} + \frac{c}{a+b+c} = 1$，则每个指标取值范围都在 (0,1) 区间内。</p>
+
+            <p>对于上述例子，进行归一化处理后得：</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>明星</th>
+                  <th>粉丝数</th>
+                  <th>颜值</th>
+                  <th>作品质量</th>
+                  <th>作品数量</th>
+                  <th>评分</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>A</td><td>0.40</td><td>0.42</td><td>0.29</td><td>0.25</td><td>1.36</td></tr>
+                <tr><td>B</td><td>0.23</td><td>0.25</td><td>0.37</td><td>0.45</td><td>1.30</td></tr>
+                <tr><td>C</td><td>0.37</td><td>0.33</td><td>0.34</td><td>0.30</td><td>1.35</td></tr>
+              </tbody>
+            </table>
+
+            <p>虽然 A 评分最高，但是每个指标的重要性不同，故应给每个指标设定一个权重。</p>
+
+            <p>如何科学设定权重？</p>
+
+            <p>由于每个人情况不同，有相应不同的比重，这些主观因素会带来不便。</p>
+
+            <h2 id="层次分析法">层次分析法</h2>
+
+            <p>层次分析法 (Analytic Hierarchy Process, AHP) 是对一些较复杂、模糊的问题作决策的简易方法。</p>
+
+            <p>它特别适用于难以完全定量分析的问题。</p>
+
+            <p><em>层次分析法并非完全客观的定权方法。</em></p>
+
+            <p><strong>模型原理</strong></p>
+
+            <p>应用 AHP 分析决策问题时，首先要把问题条理化、层次化，构造出一个有层次的结构模型。在这个模型下，复杂问题被分解为元素的组成部分。这些元素又按其属性及关系形成若干层次。上一层次的元素作为准则对下一层次有关元素起支配作用。这些层次可以分为三类：</p>
+
+            <ul>
+              <li><strong>最高层</strong>：这一层次中只有一个元素，一般它是分析问题的预定目标或理想结果，因此也称为目标层。</li>
+              <li><strong>中间层</strong>：这一层次中包含了为实现目标所涉及的中间环节，它可以由若干个层次组成，包括所需考虑的准则、子准则，因此也称为准则层。</li>
+              <li><strong>最底层</strong>：这一层次包括了为实现目标可供选择的各种措施、决策方案等，因此也称为措施层或方案层。</li>
+            </ul>
+
+            <p>依据层次分析法建模：</p>
+
+            <ol>
+              <li>建立递阶层次结构模型</li>
+              <li>构造出各层次中的所有判断矩阵</li>
+              <li>一致性检验</li>
+              <li>求权重后重新评价</li>
+            </ol>
+
+            <h3 id="建立模型">1. 建立模型</h3>
+
+            <p><img src="./source/model.jpg" alt="层次结构模型"></p>
+
+            <h3 id="构造判断矩阵">2. 构造各层次中的所有判断矩阵</h3>
+
+            <p>对指标的重要性进行<strong>两两比较</strong>，构造判断矩阵，从而科学求出权重。</p>
+
+            <p>矩阵中元素 $a_{ij}$ 的意义是：第 $i$ 个指标相对于第 $j$ 个指标的重要程度。</p>
+
+            <p><img src="./source/Judging_Matrix.jpg" alt="判断矩阵"></p>
+
+            <p>对上例，依次进行两两比较，用表格的方法得到判断矩阵：</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>粉丝数</th>
+                  <th>颜值</th>
+                  <th>作品质量</th>
+                  <th>作品数量</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>粉丝数</td><td>1</td><td>2</td><td>3</td><td>5</td></tr>
+                <tr><td>颜值</td><td>$\frac{1}{2}$</td><td>1</td><td>$\frac{1}{2}$</td><td>2</td></tr>
+                <tr><td>作品质量</td><td>$\frac{1}{3}$</td><td>2</td><td>1</td><td>$\frac{1}{2}$</td></tr>
+                <tr><td>作品数量</td><td>$\frac{1}{5}$</td><td>$\frac{1}{2}$</td><td>2</td><td>1</td></tr>
+              </tbody>
+            </table>
+
+            <p>但是，因两两比较的过程中忽略了其他因素，导致最后的结果出现矛盾。</p>
+
+            <p>例如，</p>
+
+            <p>$a_{23} = \frac{1}{2}$，说明 颜值 &lt; 作品质量</p>
+
+            <p>$a_{24} = 2$，说明 颜值 &lt; 作品数量</p>
+
+            <p>可得 作品质量 &gt; 作品数量</p>
+
+            <p>但 $a_{34} = \frac{1}{2}$，说明 作品质量 &lt; 作品数量，与上述结果矛盾。</p>
+
+            <p>所以需要进行<strong>一致性检验</strong>。</p>
+
+            <h3 id="一致性检验">3. 一致性检验</h3>
+
+            <p>$a_{ij} = \frac{i \text{ 的重要程度}}{j \text{ 的重要程度}}$，$a_{ik} = \frac{i \text{ 的重要程度}}{k \text{ 的重要程度}}$，$a_{kj} = \frac{k \text{ 的重要程度}}{j \text{ 的重要程度}}$</p>
+
+            <p>易得 $a_{ij} = a_{ik} \times a_{kj}$，且矩阵各行（列）成倍数关系，满足这两条的矩阵是<strong>一致矩阵</strong>，不会出现矛盾的情况。</p>
+
+            <p><img src="./source/Consistant_Matrix.jpg" alt="一致矩阵"></p>
+          </div>
+
+          <nav class="post-nav">
+            <a class="post-nav-item" href="../../../10/25/C++ vector进行去重/index.html">
+              <span class="post-nav-label">← older</span>
+              <span class="post-nav-title">C++ vector进行去重</span>
+            </a>
+            <a class="post-nav-item next" href="../../../02/10/obesity-risk-prediction/index.html">
+              <span class="post-nav-label">newer →</span>
+              <span class="post-nav-title">肥胖风险多分类预测项目</span>
+            </a>
+          </nav>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <div class="image-lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-label="图片预览">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">&times;</button>
+    <div class="lightbox-stage" id="lightboxStage">
+      <img id="lightboxImage" src="" alt="">
+    </div>
+    <div class="lightbox-controls">
+      <button class="lightbox-btn" id="zoomOutBtn" aria-label="缩小" title="缩小">−</button>
+      <span class="lightbox-zoom-label" id="zoomLabel">100%</span>
+      <button class="lightbox-btn" id="zoomInBtn" aria-label="放大" title="放大">+</button>
+      <button class="lightbox-btn" id="zoomResetBtn" aria-label="重置" title="重置">↺</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 AtomerCore. Built with care.</p>
+    </div>
+  </footer>
+
+  <script src="../../../../../js/main.js"></script>
+  <script>
+    // Reading progress bar
+    const progressBar = document.getElementById('readingProgress');
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (window.scrollY / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    });
+
+    // Auto-generate TOC
+    const postBody = document.querySelector('.post-body');
+    const tocSection = document.getElementById('toc-section');
+    const tocList = document.getElementById('toc-list');
+    if (postBody && tocList) {
+      const headings = postBody.querySelectorAll('h2, h3');
+      if (headings.length > 0) {
+        tocSection.style.display = 'block';
+        headings.forEach((heading, index) => {
+          if (!heading.id) heading.id = 'toc-heading-' + index;
+          const item = document.createElement('li');
+          item.className = 'toc-item';
+          const link = document.createElement('a');
+          link.href = '#' + heading.id;
+          link.textContent = heading.textContent;
+          link.className = 'toc-link' + (heading.tagName === 'H3' ? ' toc-h3' : '');
+          link.dataset.target = heading.id;
+          item.appendChild(link);
+          tocList.appendChild(item);
+        });
+        const tocLinks = tocList.querySelectorAll('.toc-link');
+        window.addEventListener('scroll', () => {
+          let current = '';
+          headings.forEach(h => {
+            if (window.scrollY >= h.offsetTop - 120) current = h.id;
+          });
+          tocLinks.forEach(l => l.classList.toggle('active', l.dataset.target === current));
+        });
+      }
+    }
+
+    // Back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- 图片灯箱：点击放大 + 缩放/拖动 ---
+    const lightbox = document.getElementById('imageLightbox');
+    const lightboxImg = document.getElementById('lightboxImage');
+    const lightboxStage = document.getElementById('lightboxStage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    const zoomResetBtn = document.getElementById('zoomResetBtn');
+    const zoomLabel = document.getElementById('zoomLabel');
+
+    let zoomLevel = 1;
+    let panX = 0, panY = 0;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+
+    function applyTransform() {
+      lightboxImg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+      zoomLabel.textContent = Math.round(zoomLevel * 100) + '%';
+      lightbox.classList.toggle('zoomed', zoomLevel > 1);
+    }
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      zoomLevel = 1;
+      panX = 0;
+      panY = 0;
+      applyTransform();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      lightboxImg.src = '';
+    }
+
+    document.querySelectorAll('.post-body img').forEach(img => {
+      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target === lightboxStage || e.target === lightboxClose) closeLightbox();
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === '+' || e.key === '=') { e.preventDefault(); zoomInBtn.click(); }
+      else if (e.key === '-') { e.preventDefault(); zoomOutBtn.click(); }
+      else if (e.key === '0') { e.preventDefault(); zoomResetBtn.click(); }
+    });
+
+    zoomInBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      zoomLevel = Math.min(parseFloat((zoomLevel + 0.25).toFixed(2)), 5);
+      applyTransform();
+    });
+
+    zoomOutBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      zoomLevel = Math.max(parseFloat((zoomLevel - 0.25).toFixed(2)), 0.5);
+      if (zoomLevel <= 1) { panX = 0; panY = 0; }
+      applyTransform();
+    });
+
+    zoomResetBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      zoomLevel = 1;
+      panX = 0;
+      panY = 0;
+      applyTransform();
+    });
+
+    // 拖动平移（仅放大时）
+    lightboxImg.addEventListener('mousedown', (e) => {
+      if (zoomLevel <= 1) return;
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      applyTransform();
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // 滚轮缩放
+    lightboxStage.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.15 : -0.15;
+      zoomLevel = Math.max(0.5, Math.min(5, parseFloat((zoomLevel + delta).toFixed(2))));
+      if (zoomLevel <= 1) { panX = 0; panY = 0; }
+      applyTransform();
+    }, { passive: false });
+  </script>
+</body>
+</html>
